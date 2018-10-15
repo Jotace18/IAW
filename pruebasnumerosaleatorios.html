@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Practica numeros aleatorios</title>
+
+    <script>
+        function aleatorio() {
+
+            var minimo = parseInt(document.getElementById("minimo").value);
+            var maximo = parseInt(document.getElementById("maximo").value);
+
+            var numero = parseInt(Math.floor(Math.random() * (maximo - minimo) + minimo));
+            imagen = document.getElementById("Imagen");
+            audio = document.getElementById("Caja_Audio");
+
+
+
+
+            switch (numero) {
+
+                case 0:
+                    imagen.sr;
+                    imagen.alt = "Número cero";
+                    audio.innerHTML = '<audio src="sonidos/cero.mp3" controls autoplay></audio>';
+                    break;
+                case 1:
+                    imagen.src = "imagenes/uno.png";
+                    imagen.alt = "Número uno";
+                    audio.innerHTML = '<audio src="sonidos/uno.mp3" controls autoplay></audio>';
+                    break;
+                case 2:
+                    imagen.src = "imagenes/dos.png";
+                    imagen.alt = "Número dos";
+                    audio.innerHTML = '<audio src="sonidos/dos.mp3" controls autoplay></audio>';
+                    break;
+                case 3:
+                    imagen.src = "imagenes/tres.png";
+                    imagen.alt = "Número tres";
+                    audio.innerHTML = '<audio src="sonidos/tres.mp3" controls autoplay></audio>';
+                    break;
+                case 4:
+                    imagen.src = "imagenes/cuatro.png";
+                    imagen.alt = "Número cuatro";
+                    audio.innerHTML = '<audio src="sonidos/cuatro.mp3" controls autoplay></audio>';
+                    break;
+                case 5:
+                    imagen.src = "imagenes/cinco.png";
+                    imagen.alt = "Número cinco";
+                    audio.innerHTML = '<audio src="sonidos/cinco.mp3" controls autoplay></audio>';
+                    break;
+                case 6:
+                    imagen.src = "imagenes/seis.png";
+                    imagen.alt = "Número seis";
+                    audio.innerHTML = '<audio src="sonidos/seis.mp3" controls autoplay></audio>';
+                    break;
+                case 7:
+                    imagen.src = "imagenes/siete.png";
+                    imagen.alt = "Número siete";
+                    audio.innerHTML = '<audio src="sonidos/siete.mp3" controls autoplay></audio>';
+                    break;
+                case 8:
+                    imagen.src = "imagenes/ocho.png";
+                    imagen.alt = "Número ocho";
+                    audio.innerHTML = '<audio src="sonidos/ocho.mp3" controls autoplay></audio>';
+                    break;
+                case 9:
+                    imagen.src = "imagenes/nueve.png";
+                    imagen.alt = "Número nueve";
+                    audio.innerHTML = '<audio src="sonidos/nueve.mp3" controls autoplay></audio>';
+                    break;
+                case 10:
+                    imagen.src = "imagenes/diez.png";
+                    imagen.alt = "Número diez";
+                    audio.innerHTML = '<audio src="sonidos/diez.mp3" controls autoplay></audio>';
+                    break;
+                default:
+                    imagen.src = "imagenes/numeros.png";
+                    imagen.alt = "Números";
+                    audio.innerHTML = '<audio src="sonidos/numero.mp3" controls autoplay></audio>';
+            }
+
+
+
+
+
+        }
+
+    </script>
+</head>
+
+<body>
+
+
+
+
+
+
+    <div>
+
+        minimo: <input type="text" id="minimo" size="2" /> maximo: <input type="text" id="maximo" size="2" />
+
+
+
+
+        <button onClick="aleatorio() "> aleatorio </button> </div>
+
+
+    <div id="Caja_Imagen"><img id="Imagen" src="imagenes/numeros.png" alt="Números" />
+    </div>
+    <div id="Caja_Audio"></div>
+
+
+</body>
+
+</html>
