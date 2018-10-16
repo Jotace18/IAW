@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Practica numeros aleatorios Juan Carlos González González</title>
+    <!-- Mediante la etiqueta styl aplicamos estilos al html-->
+    <style>
+        /* Como he escogido una fuente externa de google le indico el enlace con @import*/
+        @import url('https://fonts.googleapis.com/css?family=Bungee');
+        /*aqui ponemos un fondo */
+        body {
+            background-image: url(imagenes/catodico.gif)
+        }
+
+
+/*Aplicamos los estilos a los css con # y el nombre de la id del elemento */
+        #cabecera {
+
+
+            background-color: dimgrey;
+            text-align: center;
+            margin-top: 2%;
+
+            border: solid;
+            font-family: Bungee;
+            font-size: 12px;
+
+        }
+
+        #Explicacion {
+
+            color: white;
+            text-align: center;
+            margin-top: 5%;
+
+           
+
+            font-family: Bungee;
+            font-size: 15px;
+
+        }
+
+
+
+
+
+
+
+        #Resultado {
+            font-family: Bungee;
+            color: white;
+            background-color: none;
+            font-size: 20px;
+            text-align: center;
+            border-width: 10px
+            padding: 10%;
+              border: solid;
+            
+
+
+        }
+
+
+        #inputs {
+
+
+            font-family: Bungee;
+            color: white;
+margin-top: -15%;
+            text-align: center;
+            padding: 5%;
+
+
+        }
+
+        .input1 {
+            font-family: Bungee;
+            text-align: center;
+
+            border-radius: 30px;
+            font-size: 16px;
+
+        }
+
+
+        .input2 {
+            font-family: Bungee;
+            border-radius: 30px;
+            text-align: center;
+            font-size: 16px;
+
+        }
+
+
+
+        .boton {
+            color: #ffffff;
+            background-color: #1883ba;
+            border-radius: 6px;
+            border: 2px solid #0016b0;
+            text-align: center;
+            padding: 5%;
+            display: inline-flex;
+            padding: 2%;
+            margin-left: 25%;
+
+
+
+
+
+
+
+        }
+
+
+
+        #errores {
+
+            font-family: Bungee;
+            color: red;
+
+            font-size: 15px;
+
+            text-align: center;
+            padding: 5%;
+
+        }
+
+
+
+        #bloque_Resultado {
+
+margin-top: -15%;
+            text-align: center;
+            display: inline-flex;
+            padding: 2%;
+            /*Para que el numero esté aproximadamente en el centro con respecto a la imagen*/
+            margin-left: 45%
+        }
+
+        /*Agrupar un conjunto dev a la izquierda*/
+        #margenizq {
+
+            float: left;
+            margin-left: 10%;
+
+
+        }
+
+/*Agrupar un conjunto dev a la derecha*/
+        #margender {
+
+            float: right;
+            margin-left: 10%;
+
+
+        }
+
+        #foto {
+            margin-right: 20px;
+        }
+
+        #{text-align: justify}
+
+    </style>
+
+    <script>
+        //creamos la funcion dame_aleatorio que nos devuleve un numero aleatorio
+        function dame_aleatorio(min,max){
+            return Math.floor( (Math.random()* (max-min+1)) ) + min;
+        }   
+
+//En esta funcion establecemos las variables con los identificadores de los numeros que seran introducidos para dentro de ese intervalo hacer el calculo aleatorio ,tambien establecemos la id de la imagen y el audio 
+        function aleatorio() {
+
+            var minimo = parseInt(document.getElementById("minimo").value);
+            var maximo = parseInt(document.getElementById("maximo").value);
+
+            
+            imagen = document.getElementById("Imagen");
+            audio = document.getElementById("Audio");
+
+            //como queremos que aparezca un error y que se borre creamos el siguiente bloque elsif con el objetivo de que ; si se cumple un error aparece el mensaje y el otro se elimina y viceversa y en el caso de que este dentro de los parametros (sin errores )no aparece nada
+            if (minimo > maximo) {
+
+                document.getElementById("error1").style.display = 'none';
+                document.getElementById("experror1").style.display = 'none';
+                document.getElementById("error2").style.display = 'block';
+                document.getElementById("experror2").style.display = 'block';
+            } else if (isNaN(minimo) || isNaN(maximo)) {
+                document.getElementById("error2").style.display = 'none';
+                document.getElementById("experror2").style.display = 'none';
+                document.getElementById("error1").style.display = 'block';
+                document.getElementById("experror1").style.display = 'block';
+            } else {
+
+                document.getElementById("error1").style.display = 'none';
+                document.getElementById("experror1").style.display = 'none';
+                document.getElementById("error2").style.display = 'none';
+                document.getElementById("experror2").style.display = 'none';
+                
+                //Originalmente habia pensado en hacer un switch para el ejercico ,de manera que si se cumple cada case aparece una foto y un audio y un default si no esta dentro de los parametros, no obstante tras una reciente explicion y me consejo del profesor del modulo con un arry junta a un else if hace lo mismo y nos ahorramos tiempo y lineas de codigo
+                
+                //creamos la variable numero que llama a la funcion y le ponemos la id : Rsultado 
+                
+                var numero = dame_aleatorio(minimo, maximo);
+                document.getElementById("Resultado").innerHTML = numero;
+                
+                //aqui establecemos el array con todas las opciones de tal manera que si esta dentro del rango aparecen las fotos con su audio ,en caso contrario aparece otra foto o audios diferentes ,he escogido el formato .mp3 por que el .ogg no me lo reproducia el navegador
+                
+                var numeros = ["cero", "uno", "dos", "tres","cuatro","cinco","seis","siete","ocho","nueve","diez"];
+                if (numero >= 0 && numero <=10) {
+                        imagen.src = "imagenes/" + numero + ".png";
+                        imagen.alt = "Número " + numeros[numero];
+                        audio.innerHTML = '<audio src="sonidos/' + numero + '.mp3" controls autoplay></audio>';
+                } else {
+                        imagen.src = "imagenes/confused.gif";
+                        imagen.alt = "Números";
+                        audio.innerHTML = '<audio src="sonidos/aviso.mp3" controls autoplay></audio>';
+                }
+              
+/*//esta en el switch original que hemos dejado para mostrar la diferencia y como podemos observar el codigo anterior es mas sencillo
+                switch (numero) {
+
+                    case 0:
+                        
+                        imagen.src = "imagenes/0.png";
+                        imagen.alt = "Número cero";
+                        audio.innerHTML = '<audio src="sonidos/0.mp3" controls autoplay></audio>';
+                        break;
+                    case 1:
+                        imagen.src = "imagenes/1.png";
+                        imagen.alt = "Número uno";
+                        audio.innerHTML = '<audio src="sonidos/1.mp3" controls autoplay></audio>';
+                        break;
+                    case 2:
+                        imagen.src = "imagenes/2.png";
+                        imagen.alt = "Número dos";
+                        audio.innerHTML = '<audio src="sonidos/2.mp3" controls autoplay></audio>';
+                        break;
+                    case 3:
+                        imagen.src = "imagenes/3.png";
+                        imagen.alt = "Número tres";
+                        audio.innerHTML = '<audio src="sonidos/3.mp3" controls autoplay></audio>';
+                        break;
+                    case 4:
+                        imagen.src = "imagenes/4.png";
+                        imagen.alt = "Número cuatro";
+                        audio.innerHTML = '<audio src="sonidos/4.mp3" controls autoplay></audio>';
+                        break;
+                    case 5:
+                        imagen.src = "imagenes/5.png";
+                        imagen.alt = "Número cinco";
+                        audio.innerHTML = '<audio src="sonidos/5.mp3" controls autoplay></audio>';
+                        break;
+                    case 6:
+                        imagen.src = "imagenes/6.png";
+                        imagen.alt = "Número seis";
+                        audio.innerHTML = '<audio src="sonidos/6.mp3" controls autoplay></audio>';
+                        break;
+                    case 7:
+                        imagen.src = "imagenes/7.png";
+                        imagen.alt = "Número siete";
+                        audio.innerHTML = '<audio src="sonidos/7.mp3" controls autoplay></audio>';
+                        break;
+                    case 8:
+                        imagen.src = "imagenes/8.png";
+                        imagen.alt = "Número ocho";
+                        audio.innerHTML = '<audio src="sonidos/8.mp3" controls autoplay></audio>';
+                        break;
+                    case 9:
+                        imagen.src = "imagenes/9.png";
+                        imagen.alt = "Número nueve";
+                        audio.innerHTML = '<audio src="sonidos/9.mp3" controls autoplay></audio>';
+                        break;
+                    case 10:
+                        imagen.src = "imagenes/10.png";
+                        imagen.alt = "Número diez";
+                        audio.innerHTML = '<audio src="sonidos/10.mp3" controls autoplay></audio>';
+                        break;
+                    default:
+                        imagen.src = "imagenes/confused.gif";
+                        imagen.alt = "Números";
+                        audio.innerHTML = '<audio src="sonidos/aviso.mp3" controls autoplay></audio>';
+                }
+
+*/
+            }
+
+
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+<!-- este embed nos sirve para el sonido de fondo,esta programado para que lo reproduzca automaticamente,en bucle y la barra de audio este oculta -->
+<embed src="sonidos/fondo.mp3" autostart="true" hidden="true"  loop="true" type="audio/mpeg">
+
+<!-- para estructurar los elementos hemos creados div con id para aplicarles el css -->
+    <div id="cabecera">
+        <h1>NUMEROS ALEATORIOS EN RUSO </h1>
+    </div>
+    <div id="Explicacion">
+        <p>Introduzca un rango de números del 1 al 10, los de ese rango apareceran con una foto con su pronunciación fonetica  y un audio con su pronunciacion acustica en ruso ,si su numero esta fuera de rango le saldra un aviso en su idioma</p>
+    </div>
+    <br><br/>
+    <!-- he agrupado los div a la izquierda y a la derecha para organizarlo  -->
+    
+    <div id="margenizq">
+        <div id="inputs">
+
+            <p> minimo: <input type="number" class="input1" id="minimo" size="2" /></p><br>
+            <p>maximo: <input type="number" class="input2" id="maximo" size="2" /></p>
+        </div>
+
+            <div id="errores">
+            <p id="error2" style="display:none;">ERROR.</p>
+            <p id="experror2" style="display:none;">El número minimo es mayor que el máximo</p>
+            <p id="error1" style="display:none;">ERROR.</p>
+            <p id="experror1" style="display:none;">Solo son válidos caracteres numéricos [0-10]</p>
+        </div>
+
+       <!-- creamos un boton con el evento onclick al que le vinculamos la funcion -->
+        <div id="boton"> <button class="boton" onClick="aleatorio() ">GENERAR ALEATORIO </button> </div>
+
+    </div>
+    <div id="margender">
+        <div id="bloque_Resultado">
+            <p id="Resultado">Resultado</p>
+        </div>
+        <!-- aqui establecemos la foto que nos aparece nada mas entrar -->
+        
+        <div id="foto"><img id="Imagen" src="imagenes/num.png" alt="Números" />
+        </div>
+
+        <div id="Audio"></div>
+    </div>
+
+</body>
+
+</html>
