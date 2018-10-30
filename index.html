@@ -1,344 +1,239 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Practica numeros aleatorios Juan Carlos González González</title>
-    <!-- Mediante la etiqueta styl aplicamos estilos al html-->
+
+    <meta charset="utf-8">
+    <title>Practica adivinar un número Juan Carlos González González</title>
     <style>
-        /* Como he escogido una fuente externa de google le indico el enlace con @import*/
         @import url('https://fonts.googleapis.com/css?family=Bungee');
-        /*aqui ponemos un fondo */
+        /*damos estilo a la cabecera */
+
+        h1 {
+            font-family: Bungee;
+            text-align: center;
+            font-size: 50px;
+
+            /*Con estas tres lineas habilitamos una imagen como fondo de los caracteres */
+            background: url("humo.gif");
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+
+        }
+
+        /*configuramos el fondo */
+
         body {
-            background-image: url(imagenes/catodico.gif)
+
+
+
+            background-image: url("fondo.jpg");
+
+
+
+
+
+
         }
 
 
-/*Aplicamos los estilos a los css con # y el nombre de la id del elemento */
-        #cabecera {
 
-
-            background-color: dimgrey;
-            text-align: center;
-            margin-top: 2%;
-
-            border: solid;
+        p {
             font-family: Bungee;
-            font-size: 12px;
+            color: khaki;
+            font-size: 25px;
+
+
 
         }
 
-        #Explicacion {
-
-            color: white;
-            text-align: center;
-            margin-top: 5%;
-
-           
-
+        input,
+        button,
+        select {
             font-family: Bungee;
-            font-size: 15px;
+            text-align: center;
+            border-radius: 69px;
+
+
 
         }
 
-
-
-
-
-
-
-        #Resultado {
+        #respuestas {
             font-family: Bungee;
             color: white;
-            background-color: none;
-            font-size: 20px;
-            text-align: center;
-            border-width: 10px
-            padding: 10%;
-              border: solid;
-            
+            font-size: 25px;
 
+            border-radius: 69px;
 
         }
 
-
-        #inputs {
-
-
-            font-family: Bungee;
-            color: white;
-margin-top: -15%;
-            text-align: center;
-            padding: 5%;
-
-
-        }
-
-        .input1 {
-            font-family: Bungee;
-            text-align: center;
-
-            border-radius: 30px;
-            font-size: 16px;
-
-        }
-
-
-        .input2 {
-            font-family: Bungee;
-            border-radius: 30px;
-            text-align: center;
-            font-size: 16px;
-
-        }
-
-
-
-        .boton {
-            color: #ffffff;
-            background-color: #1883ba;
-            border-radius: 6px;
-            border: 2px solid #0016b0;
-            text-align: center;
-            padding: 5%;
-            display: inline-flex;
-            padding: 2%;
-            margin-left: 25%;
-
-
-
-
-
-
-
-        }
-
-
-
-        #errores {
-
-            font-family: Bungee;
-            color: red;
-
-            font-size: 15px;
-
-            text-align: center;
-            padding: 5%;
-
-        }
-
-
-
-        #bloque_Resultado {
-
-margin-top: -15%;
-            text-align: center;
-            display: inline-flex;
-            padding: 2%;
-            /*Para que el numero esté aproximadamente en el centro con respecto a la imagen*/
-            margin-left: 45%
-        }
-
-        /*Agrupar un conjunto dev a la izquierda*/
-        #margenizq {
-
-            float: left;
-            margin-left: 10%;
-
-
-        }
-
-/*Agrupar un conjunto dev a la derecha*/
-        #margender {
-
+        #text {
             float: right;
-            margin-left: 10%;
+            font-size: 20px;
+            color: white;
+            font-family: fantasy;
+            text-align: center;
+            background-color: green;
+            border-radius: 69px;
 
 
         }
 
-        #foto {
-            margin-right: 20px;
+        #mago {
+            float: right
         }
-
-        #{text-align: justify}
 
     </style>
-
     <script>
-        //creamos la funcion dame_aleatorio que nos devuleve un numero aleatorio
-        function dame_aleatorio(min,max){
-            return Math.floor( (Math.random()* (max-min+1)) ) + min;
-        }   
+        // buscamos un numero aleatorio entre 1 y 100
+        var numeroAdivinar = Math.floor((Math.random() * 100) + 1);
+        var contadorjuego = 0;
 
-//En esta funcion establecemos las variables con los identificadores de los numeros que seran introducidos para dentro de ese intervalo hacer el calculo aleatorio ,tambien establecemos la id de la imagen y el audio 
-        function aleatorio() {
+        function adivinar() {
+            // obtenemos el numero de respuestas posibles
+            var totalrespuestas = document.getElementById("totalrespuestas").value;
 
-            var minimo = parseInt(document.getElementById("minimo").value);
-            var maximo = parseInt(document.getElementById("maximo").value);
-
-            
-            imagen = document.getElementById("Imagen");
-            audio = document.getElementById("Audio");
-
-            //como queremos que aparezca un error y que se borre creamos el siguiente bloque elsif con el objetivo de que ; si se cumple un error aparece el mensaje y el otro se elimina y viceversa y en el caso de que este dentro de los parametros (sin errores )no aparece nada
-            if (minimo > maximo) {
-
-                document.getElementById("error1").style.display = 'none';
-                document.getElementById("experror1").style.display = 'none';
-                document.getElementById("error2").style.display = 'block';
-                document.getElementById("experror2").style.display = 'block';
-            } else if (isNaN(minimo) || isNaN(maximo)) {
-                document.getElementById("error2").style.display = 'none';
-                document.getElementById("experror2").style.display = 'none';
-                document.getElementById("error1").style.display = 'block';
-                document.getElementById("experror1").style.display = 'block';
+            if (document.getElementById("totalrespuestas").disabled == false) {
+                if (isNumber(totalrespuestas) && totalrespuestas >= 0) {
+                    document.getElementById("totalrespuestas").disabled = true;
+                    document.getElementById("numero").disabled = false;
+                    document.getElementById("numero").focus();
+                }
             } else {
+                // obtenemos el contenido del div que contiene las respuestas
+                var respuestas = document.getElementById("respuestas").innerHTML;
 
-                document.getElementById("error1").style.display = 'none';
-                document.getElementById("experror1").style.display = 'none';
-                document.getElementById("error2").style.display = 'none';
-                document.getElementById("experror2").style.display = 'none';
-                
-                //Originalmente habia pensado en hacer un switch para el ejercico ,de manera que si se cumple cada case aparece una foto y un audio y un default si no esta dentro de los parametros, no obstante tras una reciente explicion y me consejo del profesor del modulo con un arry junta a un else if hace lo mismo y nos ahorramos tiempo y lineas de codigo
-                
-                //creamos la variable numero que llama a la funcion y le ponemos la id : Rsultado 
-                
-                var numero = dame_aleatorio(minimo, maximo);
-                document.getElementById("Resultado").innerHTML = numero;
-                
-                //aqui establecemos el array con todas las opciones de tal manera que si esta dentro del rango aparecen las fotos con su audio ,en caso contrario aparece otra foto o audios diferentes ,he escogido el formato .mp3 por que el .ogg no me lo reproducia el navegador
-                
-                var numeros = ["cero", "uno", "dos", "tres","cuatro","cinco","seis","siete","ocho","nueve","diez"];
-                if (numero >= 0 && numero <=10) {
-                        imagen.src = "imagenes/" + numero + ".png";
-                        imagen.alt = "Número " + numeros[numero];
-                        audio.innerHTML = '<audio src="sonidos/' + numero + '.mp3" controls autoplay></audio>';
+                if (contadorjuego < totalrespuestas) {
+                    // obtenemos el numero introducido por el usuario
+                    var numero = document.getElementById("numero").value;
+
+                    if (isNumber(numero) && numero > 0 && numero < 100) {
+                        // aumentanos el numero de la respuesta dada
+                        contadorjuego += 1;
+
+                        if (numero > numeroAdivinar) {
+                            // El numero es superior
+
+                            // Añadimos un texto a las respuestas
+                            respuestas += "<br>" + numero + " - Dame un numero mas pequeño";
+                            document.getElementById("numero").focus();
+                        } else if (numero < numeroAdivinar) {
+                            // El numero es inferior
+
+                            // Añadimos un texto a las respuestas
+                            respuestas += "<br>" + numero + " - Dame un numero mas grande";
+                            document.getElementById("numero").focus();
+                        } else {
+                            // has acertado
+
+                            // Añadimos un texto a las respuestas
+                            respuestas += "<br>" + "<span class='acertado'>" + numero + " - HAS ACERTADO!!<img src='acierto.gif'/><br> en " + contadorjuego + " intentos </span>";
+
+                            fin();
+                        }
+                        // vaciamos el valor del numero
+                        document.getElementById("numero").value = "";
+                    } else {
+                        respuestas += "<br>" + "<span class='error'>" + numero + " - Tiene que ser un valor numerico comprendido entre 1 y 100</span>";
+                    }
                 } else {
-                        imagen.src = "imagenes/confused.gif";
-                        imagen.alt = "Números";
-                        audio.innerHTML = '<audio src="sonidos/aviso.mp3" controls autoplay></audio>';
-                }
-              
-/*//esta en el switch original que hemos dejado para mostrar la diferencia y como podemos observar el codigo anterior es mas sencillo
-                switch (numero) {
+                    respuestas += "<span class='fin'><br>NO HAS ACERTADO, has fallado en " + contadorjuego + " intentos !!El numero era el " + numeroAdivinar + "<img src='https://media.giphy.com/media/7FtRPueHtIj8Q/giphy.gif'/>  </span>";
 
-                    case 0:
-                        
-                        imagen.src = "imagenes/0.png";
-                        imagen.alt = "Número cero";
-                        audio.innerHTML = '<audio src="sonidos/0.mp3" controls autoplay></audio>';
-                        break;
-                    case 1:
-                        imagen.src = "imagenes/1.png";
-                        imagen.alt = "Número uno";
-                        audio.innerHTML = '<audio src="sonidos/1.mp3" controls autoplay></audio>';
-                        break;
-                    case 2:
-                        imagen.src = "imagenes/2.png";
-                        imagen.alt = "Número dos";
-                        audio.innerHTML = '<audio src="sonidos/2.mp3" controls autoplay></audio>';
-                        break;
-                    case 3:
-                        imagen.src = "imagenes/3.png";
-                        imagen.alt = "Número tres";
-                        audio.innerHTML = '<audio src="sonidos/3.mp3" controls autoplay></audio>';
-                        break;
-                    case 4:
-                        imagen.src = "imagenes/4.png";
-                        imagen.alt = "Número cuatro";
-                        audio.innerHTML = '<audio src="sonidos/4.mp3" controls autoplay></audio>';
-                        break;
-                    case 5:
-                        imagen.src = "imagenes/5.png";
-                        imagen.alt = "Número cinco";
-                        audio.innerHTML = '<audio src="sonidos/5.mp3" controls autoplay></audio>';
-                        break;
-                    case 6:
-                        imagen.src = "imagenes/6.png";
-                        imagen.alt = "Número seis";
-                        audio.innerHTML = '<audio src="sonidos/6.mp3" controls autoplay></audio>';
-                        break;
-                    case 7:
-                        imagen.src = "imagenes/7.png";
-                        imagen.alt = "Número siete";
-                        audio.innerHTML = '<audio src="sonidos/7.mp3" controls autoplay></audio>';
-                        break;
-                    case 8:
-                        imagen.src = "imagenes/8.png";
-                        imagen.alt = "Número ocho";
-                        audio.innerHTML = '<audio src="sonidos/8.mp3" controls autoplay></audio>';
-                        break;
-                    case 9:
-                        imagen.src = "imagenes/9.png";
-                        imagen.alt = "Número nueve";
-                        audio.innerHTML = '<audio src="sonidos/9.mp3" controls autoplay></audio>';
-                        break;
-                    case 10:
-                        imagen.src = "imagenes/10.png";
-                        imagen.alt = "Número diez";
-                        audio.innerHTML = '<audio src="sonidos/10.mp3" controls autoplay></audio>';
-                        break;
-                    default:
-                        imagen.src = "imagenes/confused.gif";
-                        imagen.alt = "Números";
-                        audio.innerHTML = '<audio src="sonidos/aviso.mp3" controls autoplay></audio>';
+                    fin();
                 }
 
-*/
+                // ponemos nuevamente todas las respuestas
+                document.getElementById("respuestas").innerHTML = respuestas;
             }
 
+            // devolvemos false para que el formulario no envie los valores
+            return false;
+        }
 
+        // Funcion que se ejecuta al finalizar el juego
+        // ya sea por haber descubierto el numero o por finalizar el numero de
+        // intentos
+        function fin() {
+            // deshabilitamos el casilla de entrar el numero, y el
+            // boton de enviar
+            document.getElementById("numero").disabled = true;
+            document.getElementById("btnEnviar").disabled = true;
+            //boton de recargar para segui jugando
+            document.getElementById("recarga").innerHTML = "<button onclick='window.location.href=window.location.href'>Recargar</button>";
+
+        }
+
+        // Simple función para validar un numero
+        function isNumber(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
         }
 
     </script>
-
 </head>
 
 <body>
 
-<!-- este embed nos sirve para el sonido de fondo,esta programado para que lo reproduzca automaticamente,en bucle y la barra de audio este oculta -->
-<embed src="sonidos/fondo.mp3" autostart="true" hidden="true"  loop="true" type="audio/mpeg">
+    <!--Cabecera -->
+    <h1>Adivina un número entre 1 y 100</h1>
+    <!--Explicacion -->
 
-<!-- para estructurar los elementos hemos creados div con id para aplicarles el css -->
-    <div id="cabecera">
-        <h1>NUMEROS ALEATORIOS EN RUSO </h1>
-    </div>
-    <div id="Explicacion">
-        <p>Introduzca un rango de números del 1 al 10, los de ese rango apareceran con una foto con su pronunciación fonetica  y un audio con su pronunciacion acustica en ruso ,si su numero esta fuera de rango le saldra un aviso en su idioma</p>
-    </div>
-    <br><br/>
-    <!-- he agrupado los div a la izquierda y a la derecha para organizarlo  -->
-    
-    <div id="margenizq">
-        <div id="inputs">
+    <div id="text">
+        Este juego se trata de adivinar número en un determinado número de intentos El número que habrá que adivinar estará entre el 1 y el 100 (ambos inclusive) Después de cada intento aparecerá un mensaje diciendo si tu numero es mayor o menor El número de intentos se elegirá de la lista desplegable Si se sobrepasa el número de intentos habrá perdido
 
-            <p> minimo: <input type="number" class="input1" id="minimo" size="2" /></p><br>
-            <p>maximo: <input type="number" class="input2" id="maximo" size="2" /></p>
-        </div>
 
-            <div id="errores">
-            <p id="error2" style="display:none;">ERROR.</p>
-            <p id="experror2" style="display:none;">El número minimo es mayor que el máximo</p>
-            <p id="error1" style="display:none;">ERROR.</p>
-            <p id="experror1" style="display:none;">Solo son válidos caracteres numéricos [0-10]</p>
-        </div>
-
-       <!-- creamos un boton con el evento onclick al que le vinculamos la funcion -->
-        <div id="boton"> <button class="boton" onClick="aleatorio() ">GENERAR ALEATORIO </button> </div>
 
     </div>
-    <div id="margender">
-        <div id="bloque_Resultado">
-            <p id="Resultado">Resultado</p>
-        </div>
-        <!-- aqui establecemos la foto que nos aparece nada mas entrar -->
+    <!-- Creamos un formulario que contiene los elementos del juego y devuelve el resultado de la funcion -->
+
+    <form onsubmit="return adivinar()">
+        <p>Indica el número de intentos posibles:</p>
+
+        <div id="mago"><img src="adivino.gif" /></div>
+
+        <!-- Aqui introducimos el selector con la dificultad   -->
+
+        <select name="totalrespuestas" id="totalrespuestas">
         
-        <div id="foto"><img id="Imagen" src="imagenes/num.png" alt="Números" />
-        </div>
+    
+        
+        <option value="1"> VETERANO, solo tienes un intento, veo que te gustan los desafios!! </option>
+                <option value="3">CURTIDO, veo que eres duro solo tienes 3 intentos</option>
+                <option value="7">PROFESIONAL, no esta mal pero...7 intentos no son demasiados para la elite </option>
+                <option value="10">FACIL,Con 10 intentos el exito esta asegurado</option>
+        
+        
+    </select>
 
-        <div id="Audio"></div>
-    </div>
+
+
+
+
+
+
+
+
+        <br>
+        <!-- 
+        establecemos el numero para que lo compare -->
+        <p>Indica un numero entre 1 y 100:</p>
+        <input type="text" name="numero" id="numero" disabled><br>
+
+        <!-- 
+       boton que envia el numero -->
+        <br><input type="submit" value="Enviar" id="btnEnviar">
+
+        <!-- 
+       con este div nos muestra si hemos acertado o no -->
+        <div id="respuestas"></div>
+        <!-- 
+        Este boton recarga la pagina para sguir jugando -->
+
+        <div id="recarga"></div>
+    </form>
+
+
+
 
 </body>
 
